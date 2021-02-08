@@ -1,0 +1,8 @@
+#+STARTUP:showall
+* Das [X] sollte die Ergebnis widerspiegeln
+* Geben Prioritäten mit org-mode Beschriftungen
+* Korrelationstruktur für Fehler und ähnliche Wörter
+* System zum Lesen von deutschem Text
+** Downloader
+** OCR-System
+* Übersetzer-APIs
