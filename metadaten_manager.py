@@ -11,7 +11,7 @@ os.makedirs(PICKLE_VERZEICHNIS, exist_ok=True)
 
 class Ergebnis:
     def __init__(self, terminzeit, wert=-1):
-        self.terminzet = terminzeit
+        self.terminzeit = terminzeit
         self.wert = -1
 
 
@@ -22,16 +22,16 @@ class Metadaten:
     def hash_berechnen(self):
         h = hashlib.sha256()
         for ergebnis in self.chronologie:
-            s = ergebnis.terminzet + '_' + str(ergebnis.wert)
+            s = ergebnis.terminzeit + '_' + str(ergebnis.wert)
             h.update(s.encode('utf-8'))
         hex = h.hexdigest()
         return hex[:10]
 
     def zu_pickle(self):
-        hex = self.hash_berechnen()
+        hex_ = self.hash_berechnen()
         dateipfad = os.path.join(PICKLE_VERZEICHNIS, hex)
         pickle.dump(self.chronologie, open(dateipfad, 'wb'))
-        return hex
+        return hex_
 
     @classmethod
     def von_pickle(cls, hex):
@@ -51,9 +51,9 @@ def verlassen_pickles_reinigen():
     alle_pickles = [p.split('.pickle')[0] for p in os.listdir(PICKLE_VERZEICHNIS) if p.endswith('.pickle')]
 
     wurzelverzeichnis = os.path.expanduser('~/Dropbox/org/notes/learning/german/')
-    datein = [f for f in os.listdir(wurzelverzeichnis) if f.startswith('german_')]
-    dateipfade = [os.path.join(wurzelverzeichnis, f) for f in datein]
-    dateipfade = [f for f in dateipfade if os.path.isfile(f)]
+    dateien = [d for d in os.listdir(wurzelverzeichnis) if d.startswith('german_')]
+    dateipfade = [os.path.join(wurzelverzeichnis, d) for d in dateien]
+    dateipfade = [d for d in dateipfade if os.path.isfile(d)]
     aktiv_pickles = []
     for dateipfad in dateipfade:
         with open(dateipfad) as f:
@@ -63,8 +63,8 @@ def verlassen_pickles_reinigen():
                     zeile = zeile.rstrip()
                     m = re.search(r'hex:"(.*?)"$', zeile)
                     if m is not None:
-                        hex = m.group(1)
-                        aktiv_pickles.append(hex)
+                        hex_ = m.group(1)
+                        aktiv_pickles.append(hex_)
     zu_reinigen = set(alle_pickles).difference(aktiv_pickles)
     print('inaktiv pickles:', zu_reinigen)
 

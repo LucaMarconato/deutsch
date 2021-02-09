@@ -84,9 +84,9 @@ def zeile_analysieren(zeile: str):
 
 def objekte_analysieren() -> List[Sammlung]:
     wurzelverzeichnis = os.path.expanduser('~/Dropbox/org/notes/learning/german/')
-    datein = [f for f in os.listdir(wurzelverzeichnis) if f.startswith('german_')]
-    dateipfade = [os.path.join(wurzelverzeichnis, f) for f in datein]
-    dateipfade = [f for f in dateipfade if os.path.isfile(f)]
+    dateien = [d for d in os.listdir(wurzelverzeichnis) if d.startswith('german_')]
+    dateipfade = [os.path.join(wurzelverzeichnis, d) for d in dateien]
+    dateipfade = [d for d in dateipfade if os.path.isfile(d)]
 
     sammlungen = []
 
